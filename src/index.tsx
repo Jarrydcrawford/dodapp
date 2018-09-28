@@ -7,7 +7,7 @@ import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
 
-import App from './App';
+import { App } from './App';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),

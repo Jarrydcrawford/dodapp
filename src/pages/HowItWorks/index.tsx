@@ -1,28 +1,47 @@
 import * as React from 'react';
+import styled from 'react-emotion';
+import { Link } from 'react-router-dom';
 
-export interface Props {}
+import { instructions } from '../../data/instructions';
 
-export class HowItWorks extends React.Component<Props> {
+export interface Props {
+  active: boolean;
+}
+
+export interface State {
+  step: number;
+}
+
+const StyledLi = styled('li')<Props>`
+  display: ${props => (props.active ? 'block' : 'none')};
+`;
+
+export class HowItWorks extends React.Component<Props, State> {
+  readonly state = {
+    step: 0,
+  };
+
   public render(): JSX.Element {
     return (
       <>
         <h1>How it works</h1>
         <ol>
-          <li>Share your voting link with your team</li>
+          {instructions.map((instruction, idx) => (
+            <StyledLi active={this.state.step === idx}>{instruction}</StyledLi>
+          ))}
         </ol>
-        <button>Next</button>
-        <ol>
-          <li>Everyone creates their vote and submits it, warts and all</li>
-        </ol>
-        <button>Next</button>
-        <ol>
-          <li>
-            The vote creator can read out the votes, or instantly publish them
-            to everyone
-          </li>
-        </ol>
-        <button>Start</button>
+        {this.state.step >= instructions.length - 1 ? (
+          <Link to="/create">Start</Link>
+        ) : (
+          <button onClick={this.nextStep}>Next</button>
+        )}
       </>
     );
   }
+
+  private nextStep = () => {
+    this.setState(prevState => ({
+      step: prevState.step + 1,
+    }));
+  };
 }

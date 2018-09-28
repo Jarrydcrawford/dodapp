@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { injectGlobal } from 'react-emotion';
+import styled, { injectGlobal } from 'react-emotion';
 import { Route, Switch } from 'react-router';
 
+import { Header } from './components/Header';
 import { CreatePoll } from './pages/CreatePoll';
 import { CreateVote } from './pages/CreateVote';
 import { HowItWorks } from './pages/HowItWorks';
@@ -24,20 +25,38 @@ injectGlobal`
   }
 `;
 
-class App extends React.Component {
+const Main = styled('main')`
+  display: flex;
+  height: 100vh;
+  flex: 1 0 auto;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+`;
+
+const Section = styled('section')`
+  flex: 0 1 100%;
+  padding: 20px;
+`;
+
+export class App extends React.Component {
   public render(): JSX.Element {
     return (
-      <Switch>
-        <Route component={Intro} exact={true} path="/" />
+      <Main>
+        <Header />
+        <Section>
+          <Switch>
+            <Route component={Intro} exact={true} path="/" />
 
-        <Route component={HowItWorks} exact={true} path="/how-it-works" />
-        <Route component={CreatePoll} exact={true} path="/create" />
+            <Route component={HowItWorks} exact={true} path="/how-it-works" />
+            <Route component={CreatePoll} exact={true} path="/create" />
 
-        <Route path="/:id" component={ViewVotes} />
-        <Route path="/:id/create" component={CreateVote} />
-      </Switch>
+            <Route path="/:id" exact={true} component={ViewVotes} />
+            <Route path="/:id/create" exact={true} component={CreateVote} />
+          </Switch>
+        </Section>
+      </Main>
     );
   }
 }
-
-export default App;

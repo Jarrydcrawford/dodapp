@@ -13,6 +13,10 @@ interface State {
 }
 
 export class ViewVotes extends React.Component<Props, State> {
+  state = {
+    currentVote: 1,
+  };
+
   public render(): JSX.Element {
     const {
       votes = {

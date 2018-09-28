@@ -1,3 +1,4 @@
+import { parse } from 'qs';
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
@@ -23,25 +24,34 @@ export class CreatePoll extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props): void {
-    if (
-      !!this.props.location.search &&
-      this.props.location.search !== prevProps.location.search
-    ) {
+    const params: { id?: string } = parse(this.props.location.search, {
+      ignoreQueryPrefix: true,
+    });
+    const prevParams: { id?: string } = parse(prevProps.location.search, {
+      ignoreQueryPrefix: true,
+    });
+    if (!!params.id && params.id !== prevParams.id) {
       this.setState({ hasSubmitted: true });
     }
   }
 
   public render(): JSX.Element {
+    const params: { id?: string } = parse(this.props.location.search, {
+      ignoreQueryPrefix: true,
+    });
     return (
       <>
         <h1>{this.getHeading(this.state.hasSubmitted)}</h1>
         {this.state.hasSubmitted ? (
-          <Share url={location.href} />
+          <Share
+            url={`http://${window.location.host}/${this.state.dodName ||
+              params.id}/create`}
+          />
         ) : (
           <>
             <input type="text" onChange={this.handleOnChange} />
             {!!this.state.dodName ? (
-              <Link to={`${this.props.match.url}?=${this.state.dodName}`}>
+              <Link to={`${this.props.match.url}?id=${this.state.dodName}`}>
                 Next
               </Link>
             ) : (

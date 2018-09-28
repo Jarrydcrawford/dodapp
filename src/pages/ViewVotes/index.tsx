@@ -1,16 +1,23 @@
 import * as React from 'react';
+import styled from 'react-emotion';
+
+import { sampleVotes } from '../../data';
 
 export interface Vote {
   text: string;
 }
 
 export interface Props {
-  votes: { [voteId: number]: Vote };
+  votes: Vote[];
 }
 
 interface State {
   currentVote: number;
 }
+
+const StyledArticle = styled('article')<{ visible: boolean }>`
+  display: ${props => (props.visible ? 'block' : 'none')};
+`;
 
 export class ViewVotes extends React.Component<Props, State> {
   state = {
@@ -18,23 +25,44 @@ export class ViewVotes extends React.Component<Props, State> {
   };
 
   public render(): JSX.Element {
-    const {
-      votes = {
-        '1': 'foo',
-        '2': 'bar',
-      },
-    } = this.props;
     return (
       <>
-        {Object.entries(votes).map(([id, vote]) => (
-          <>
+        {(this.props.votes || sampleVotes).map((vote, idx) => (
+          <StyledArticle key={idx} visible={this.state.currentVote === idx + 1}>
             <h1>Vote {this.state.currentVote}</h1>
             <p>{vote.text}</p>
-          </>
+          </StyledArticle>
         ))}
-        <button>Previous</button>
-        <button>Next</button>
+        <button
+          disabled={this.state.currentVote === 1}
+          onClick={this.handlePrevVote}
+        >
+          Previous
+        </button>
+        <button
+          disabled={
+            this.state.currentVote === (this.props.votes || sampleVotes).length
+          }
+          onClick={this.handleNextVote}
+        >
+          Next
+        </button>
       </>
     );
   }
+
+  private handleNextVote = (): void => {
+    this.setState(prevState => ({
+      currentVote:
+        prevState.currentVote >= (this.props.votes || sampleVotes).length
+          ? prevState.currentVote
+          : prevState.currentVote + 1,
+    }));
+  };
+
+  private handlePrevVote = (): void => {
+    this.setState(prevState => ({
+      currentVote: prevState.currentVote <= 1 ? 1 : prevState.currentVote - 1,
+    }));
+  };
 }

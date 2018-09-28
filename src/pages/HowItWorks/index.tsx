@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { Link } from 'react-router-dom';
 
-import { instructions } from '../../data/instructions';
+import { instructions } from '../../data';
 
 export interface Props {
   active: boolean;

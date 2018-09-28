@@ -14,9 +14,15 @@ interface State {
 
 export class ViewVotes extends React.Component<Props, State> {
   public render(): JSX.Element {
+    const {
+      votes = {
+        '1': 'foo',
+        '2': 'bar',
+      },
+    } = this.props;
     return (
       <>
-        {Object.entries(this.props.votes).map(([id, vote]) => (
+        {Object.entries(votes).map(([id, vote]) => (
           <>
             <h1>Vote {this.state.currentVote}</h1>
             <p>{vote.text}</p>

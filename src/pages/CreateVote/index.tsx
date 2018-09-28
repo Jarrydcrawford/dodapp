@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export class Create extends React.Component {
+export class CreateVote extends React.Component {
   public render(): JSX.Element {
     return (
       <>

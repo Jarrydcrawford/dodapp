@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-export class Share extends React.Component {
+export class CreatePoll extends React.Component {
+  componentDidUpdate() {}
+
   public render(): JSX.Element {
     return (
       <>
-        <h1>Link to your DOD:</h1>
-        <input type="text" readOnly={true} />
-        <button>Copy</button>
-        <button>Share</button>
-        <button>Open in browser</button>
+        <h1>Create your fucking DOD:</h1>
+        <input type="text" value="" />
+        <button>Next</button>
       </>
     );
   }

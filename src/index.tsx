@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
@@ -15,10 +16,11 @@ const client = new ApolloClient({
   }),
 });
 
-const ApolloApp = (Component: React.ComponentClass) => (
-  <ApolloProvider client={client}>
-    <Component />
-  </ApolloProvider>
+ReactDOM.render(
+  <BrowserRouter>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </BrowserRouter>,
+  document.getElementById('root') as HTMLElement,
 );
-
-ReactDOM.render(ApolloApp(App), document.getElementById('root') as HTMLElement);

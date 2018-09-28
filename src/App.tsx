@@ -49,11 +49,11 @@ export class App extends React.Component {
           <Switch>
             <Route component={Intro} exact={true} path="/" />
 
-            <Route component={HowItWorks} exact={true} path="/how-it-works" />
-            <Route component={CreatePoll} exact={true} path="/create" />
+            <Route component={HowItWorks} path="/how-it-works" />
+            <Route component={CreatePoll} path="/create" />
 
-            <Route path="/:id" exact={true} component={ViewVotes} />
-            <Route path="/:id/create" exact={true} component={CreateVote} />
+            <Route path="/:id" component={ViewVotes} />
+            <Route path="/:id/create" component={CreateVote} />
           </Switch>
         </Section>
       </Main>

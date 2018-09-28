@@ -1,6 +1,7 @@
 // import { parse } from 'qs';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Button, Form, Header, TextArea } from 'semantic-ui-react';
 
 interface CreateVoteRouterProps {
   id: string;
@@ -19,7 +20,9 @@ export class CreateVote extends React.Component<Props, State> {
   public render(): JSX.Element {
     return (
       <>
-        <h1>{this.getHeading(this.state.hasSubmitted)}</h1>
+        <Header as="h2" textAlign="center">
+          {this.getHeading(this.state.hasSubmitted)}
+        </Header>
         {this.state.hasSubmitted ? (
           <>
             <p>
@@ -31,21 +34,24 @@ export class CreateVote extends React.Component<Props, State> {
               We&rsquo;re collecting votes from the other pricks. Soon, the
               character assassinations will begin.
             </p>
-            <button onClick={this.handleViewResults} type="button">
+            <Button fluid={true} onClick={this.handleViewResults}>
               Refresh
-            </button>
+            </Button>
           </>
         ) : (
-          <form onSubmit={this.handleVoteSubmission}>
-            <textarea
-              cols={30}
-              id="vote"
-              name="vote"
-              placeholder="Tell us what you really think about your (team)mates&hellip;"
-              rows={10}
-            />
-            <button type="submit">Submit</button>
-          </form>
+          <Form onSubmit={this.handleVoteSubmission}>
+            <Form.Field>
+              <TextArea
+                autoHeight={true}
+                placeholder="Tell us what you really think about your (team)mates&hellip;"
+              />
+            </Form.Field>
+            <Form.Field>
+              <Button fluid={true} type="submit">
+                Submit
+              </Button>
+            </Form.Field>
+          </Form>
         )}
       </>
     );

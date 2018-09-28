@@ -1,6 +1,7 @@
 import { parse } from 'qs';
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Form, Header } from 'semantic-ui-react';
 
 import { Share } from '../../components/Share';
 
@@ -18,7 +19,11 @@ export class CreatePoll extends React.Component<Props, State> {
   };
 
   componentDidMount(): void {
-    if (!!this.props.location.search) {
+    const params: { id?: string } = parse(this.props.location.search, {
+      ignoreQueryPrefix: true,
+    });
+
+    if (!!params.id) {
       this.setState({ hasSubmitted: true });
     }
   }
@@ -30,6 +35,7 @@ export class CreatePoll extends React.Component<Props, State> {
     const prevParams: { id?: string } = parse(prevProps.location.search, {
       ignoreQueryPrefix: true,
     });
+
     if (!!params.id && params.id !== prevParams.id) {
       this.setState({ hasSubmitted: true });
     }
@@ -39,26 +45,32 @@ export class CreatePoll extends React.Component<Props, State> {
     const params: { id?: string } = parse(this.props.location.search, {
       ignoreQueryPrefix: true,
     });
+
     return (
       <>
-        <h1>{this.getHeading(this.state.hasSubmitted)}</h1>
-        {this.state.hasSubmitted ? (
-          <Share
-            url={`http://${window.location.host}/${this.state.dodName ||
-              params.id}/create`}
-          />
-        ) : (
-          <>
-            <input type="text" onChange={this.handleOnChange} />
-            {!!this.state.dodName ? (
-              <Link to={`${this.props.match.url}?id=${this.state.dodName}`}>
+        <Header as="h2" textAlign="center">
+          {this.getHeading(this.state.hasSubmitted)}
+        </Header>
+        <Form>
+          {this.state.hasSubmitted ? (
+            <Share
+              url={`http://${window.location.host}/${this.state.dodName ||
+                params.id}/create`}
+            />
+          ) : (
+            <Form.Field>
+              <Form.Input type="text" onChange={this.handleOnChange} />
+              <Button
+                as={Link}
+                disabled={!this.state.dodName}
+                fluid={true}
+                to={`${this.props.match.url}?id=${this.state.dodName}`}
+              >
                 Next
-              </Link>
-            ) : (
-              <span>Next</span>
-            )}
-          </>
-        )}
+              </Button>
+            </Form.Field>
+          )}
+        </Form>
       </>
     );
   }

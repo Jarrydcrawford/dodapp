@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'react-emotion';
+import { Button, Card, Icon } from 'semantic-ui-react';
 
 import { sampleVotes } from '../../data';
 
@@ -16,7 +17,7 @@ interface State {
 }
 
 const StyledArticle = styled('article')<{ visible: boolean }>`
-  display: ${props => (props.visible ? 'block' : 'none')};
+  display: ${props => (props.visible ? 'flex' : 'none')} !important;
 `;
 
 export class ViewVotes extends React.Component<Props, State> {
@@ -28,25 +29,42 @@ export class ViewVotes extends React.Component<Props, State> {
     return (
       <>
         {(this.props.votes || sampleVotes).map((vote, idx) => (
-          <StyledArticle key={idx} visible={this.state.currentVote === idx + 1}>
-            <h1>Vote {this.state.currentVote}</h1>
-            <p>{vote.text}</p>
-          </StyledArticle>
+          <Card
+            as={StyledArticle}
+            fluid={true}
+            key={idx}
+            visible={this.state.currentVote === idx + 1}
+          >
+            <Card.Content
+              as="h2"
+              textAlign="center"
+              content={`Vote ${this.state.currentVote}`}
+            />
+            <Card.Content content={vote.text} />
+          </Card>
         ))}
-        <button
+        <Button
           disabled={this.state.currentVote === 1}
+          floated="left"
+          icon={true}
+          labelPosition="left"
           onClick={this.handlePrevVote}
         >
+          <Icon name="arrow left" />
           Previous
-        </button>
-        <button
+        </Button>
+        <Button
           disabled={
             this.state.currentVote === (this.props.votes || sampleVotes).length
           }
+          floated="right"
+          icon={true}
+          labelPosition="right"
           onClick={this.handleNextVote}
         >
+          <Icon name="arrow right" />
           Next
-        </button>
+        </Button>
       </>
     );
   }

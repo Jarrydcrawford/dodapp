@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 import { Link } from 'react-router-dom';
+import { Button, Header } from 'semantic-ui-react';
 
 import { instructions } from '../../data';
 
@@ -12,8 +13,9 @@ export interface State {
   step: number;
 }
 
-const StyledLi = styled('li')<Props>`
+const StyledParagraph = styled('p')<Props>`
   display: ${props => (props.active ? 'block' : 'none')};
+  text-align: center;
 `;
 
 export class HowItWorks extends React.Component<Props, State> {
@@ -24,16 +26,21 @@ export class HowItWorks extends React.Component<Props, State> {
   public render(): JSX.Element {
     return (
       <>
-        <h1>How it works</h1>
-        <ol>
-          {instructions.map((instruction, idx) => (
-            <StyledLi active={this.state.step === idx}>{instruction}</StyledLi>
-          ))}
-        </ol>
+        <Header as="h2" textAlign="center">
+          How it works
+        </Header>
+        {instructions.map((instruction, idx) => (
+          <StyledParagraph active={this.state.step === idx}>{`${idx +
+            1}. ${instruction}`}</StyledParagraph>
+        ))}
         {this.state.step >= instructions.length - 1 ? (
-          <Link to="/create">Start</Link>
+          <Button as={Link} fluid={true} to="/create">
+            Start
+          </Button>
         ) : (
-          <button onClick={this.nextStep}>Next</button>
+          <Button onClick={this.nextStep} fluid={true}>
+            Next
+          </Button>
         )}
       </>
     );

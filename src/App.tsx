@@ -52,8 +52,8 @@ export class App extends React.Component {
             <Route component={HowItWorks} path="/how-it-works" />
             <Route component={CreatePoll} path="/create" />
 
-            <Route path="/:id" component={ViewVotes} />
-            <Route path="/:id/create" component={CreateVote} />
+            <Route component={ViewVotes} exact={true} path="/:id" />
+            <Route component={CreateVote} path="/:id/create" />
           </Switch>
         </Section>
       </Main>

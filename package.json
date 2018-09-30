@@ -6,8 +6,8 @@
   "license": "UNLICENSED",
   "private": true,
   "engines": {
-    "node": ">=10",
-    "yarn": ">=1.9"
+    "node": ">=8",
+    "yarn": ">=1.3"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.1.12",
@@ -15,6 +15,7 @@
     "apollo-link-http": "^1.5.3",
     "catling": "^1.4.0",
     "emotion": "^9.2.10",
+    "formik": "^1.3.0",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
     "qs": "^6.5.2",
@@ -29,7 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "build": "react-scripts-ts build && cp ./build/index.html ./build/404.html",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "types": "CODEGEN_AVOID_OPTIONALS=true CODEGEN_ENUMS_AS_TYPES=true gql-gen --schema ${REACT_APP_API_URL}  --template graphql-codegen-typescript-template --out ./src/types/gql.ts"

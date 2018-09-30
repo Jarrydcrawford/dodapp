@@ -9,6 +9,12 @@ export const GET_MATCH = gql`
       id
       opponent
       playedAt
+      team {
+        players {
+          name
+          id
+        }
+      }
       votes {
         id
         comment

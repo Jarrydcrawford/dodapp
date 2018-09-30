@@ -13,6 +13,7 @@
     "ordered-imports": [true, { "grouped-imports": true }],
     "strict-boolean-expressions": false,
     "variable-name": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "function-name": [true, { "function-regex": "^[a-zA-Z][\\w\\d]+$" }]
   }
 }
